@@ -1,5 +1,14 @@
 import { useReducer } from 'react';
 
+interface CounterAction {
+  type: 'increment' | 'decrement' | 'reset' | 'updateCountFromDraft';
+}
+
+interface UpdateDraftCounterAction {
+  type: 'updateDraftCount';
+  payload: number | string;
+}
+
 type InitialState = {
   count: number;
   draftCount: string | number;
@@ -10,32 +19,26 @@ const initialState: InitialState = {
   draftCount: 0,
 };
 
-const reducer = (state = initialState, action: any) => {
-  const { count, draftCount } = state;
+const reducer = (
+  state = initialState,
+  action: CounterAction | UpdateDraftCounterAction,
+) => {
+  let { count, draftCount } = state;
 
-  if (action.type === 'increment') {
-    const newCount = count + 1;
-    return { count: newCount, draftCount: newCount };
+  switch (action.type) {
+    case 'increment':
+      count = count + 1;
+      return { count: count, draftCount: count };
+    case 'decrement':
+      count = count - 1;
+      return { count: count, draftCount: count };
+    case 'reset':
+      return { count: 0, draftCount: 0 };
+    case 'updateDraftCount':
+      return { count, draftCount: action.payload };
+    case 'updateCountFromDraft':
+      return { count: Number(draftCount), draftCount };
   }
-
-  if (action.type === 'decrement') {
-    const newCount = count - 1;
-    return { count: newCount, draftCount: newCount };
-  }
-
-  if (action.type === 'reset') {
-    return { count: 0, draftCount: 0 };
-  }
-
-  if (action.type === 'updateDraftCount') {
-    return { count, draftCount: action.payload };
-  }
-
-  if (action.type === 'updateCountFromDraft') {
-    return { count: Number(draftCount), draftCount };
-  }
-
-  return state;
 };
 
 const Counter = () => {
@@ -65,7 +68,7 @@ const Counter = () => {
             type="number"
             value={draftCount}
             onChange={(e) =>
-              dispatch({ action: 'updateDraftCount', payload: e.target.value })
+              dispatch({ type: 'updateDraftCount', payload: e.target.value })
             }
           />
           <button type="submit">Update Counter</button>
