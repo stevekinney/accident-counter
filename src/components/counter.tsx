@@ -11,7 +11,6 @@ const initialState: InitialState = {
 };
 
 const reducer = (state = initialState, action: any) => {
-  console.log({ action });
   const { count, draftCount } = state;
 
   if (action.type === 'increment') {
@@ -29,7 +28,6 @@ const reducer = (state = initialState, action: any) => {
   }
 
   if (action.type === 'updateDraftCount') {
-    console.log('updateDraftCount');
     return { count, draftCount: action.payload };
   }
 
