@@ -1,3 +1,3 @@
-# React and TypeScript Example
+# A Simple Counter
 
-This is an exmaple application from Steve's React and TypeScript course.
+A silly little application for Steve's Redux Toolkit Course.
