@@ -6,7 +6,7 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
-      colors: { ...colors, primary: colors.orange },
+      colors: { ...colors, primary: colors.red },
     },
   },
   plugins: [],
